@@ -1,0 +1,125 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR ORGANIZATION
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2024-02-25 06:58+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: pygettext.py 1.5\n"
+
+
+msgid "A query for search. See --search_engine parameter."
+msgstr "Поисковый запрос. Смотрите описание аргумента --search_engine"
+
+msgid "default: simple case-insensitive string comparison\n"
+"regex: Python\'s standard regular expression. See https://docs.python.org/3/library/re.html#regular-expression-syntax\n"
+"whoosh: Whoosh search engine. See https://whoosh.readthedocs.io/en/latest/querylang.html"
+msgstr "Метод поиска:\n"
+"    default: простое сравнение строк без учета регистра\n"
+"    regex: стандартное регулярное выражение языка Питон. Справка: https://docs.python.org/3/library/re.html#regular-expression-syntax\n"
+"    whoosh: поисковый движок Whoosh. Справка: https://whoosh.readthedocs.io/en/latest/querylang.html"
+
+msgid ""
+"Path to directory where pre-downloaded youtube video subtitles are located.\n"
+"Used only --youtube_channel_url option is not specified.\n"
+"VTT subtitles format is supported only.\n"
+"Json file with video information should be located in the same folder."
+msgstr ""
+"Путь к директории, где расположены заранее скачанные youtube видео субтитры.\n"
+"Используется только, когда не указан аргумент --youtube_channel_url.\n"
+"Единственный поддерживаемый формат субтитров - VTT.\n"
+"Файл json с информацией о видео должен быть расположен рядом с файлом субтитров."
+
+msgid "Download missing subtitles for channel before searching.\n"
+"Warning: Slows down execution especially if Youtube throttles on too often requests.\n"
+"Best practice is to download missing subtitles only when necessary.\n"
+"Searching can rely on caches subtitles. Just remove this option after downloading "
+"or use argument --subtitles_downloading_cooldown_hours."
+msgstr "Скачать недостающие субтитры всех видео youtube канала перед поиском.\n"
+"Внимание: замедляет выполнение запроса, особенно в случае, когда Youtube активирует троттлинг при частых запросах.\n"
+"Скачивание рекомендуется выполнять только при необходимости.\n"
+"Рекомендуется выполнять поиск в закэшированных субтитрах. "
+"Просто удалите этот аргумент после скачивания\n"
+"или воспользуйтесь аргументом --subtitles_downloading_cooldown_hours, чтобы выполнять обращение к youtube реже."
+
+msgid "Delete downloaded video info files(subtitles and json) after conversion\n"
+"to text form to save file system space."
+msgstr "Удалить скачанные файлы, связанные с видео(субтитры и json файл информации о видео),\n"
+"после преобразования субтитров в текстовую форму, чтобы сохранить свободное место файловой системы."
+
+msgid "URL of Youtube channel to download subtitles from. Ex: https://www.youtube.com/@galkovskyland"
+msgstr "Ссылка на Youtube канал, откуда будут скачаны субтитры. Пример: https://www.youtube.com/@galkovskyland"
+
+msgid "Path to root subtitles cache directory. All downloaded subtitles will be stored there."
+msgstr "Путь к директории кэша субтитров. Все скачанные субтитры будут сохранены здесь."
+
+msgid "When downloading subtitles use video identifier instead of video title\n"
+"as part of names of created files and folders.\n"
+"Allows to avoid problem of max path length on Windows OS."
+msgstr "При скачивании субтитров использовать идентификатор вместо названия видео как часть имени создаваемых файлов и директорий.\n"
+"Позволяет обойти проблему ограничения длины пути файловой системы по-умолчанию в операционной системе Windows"
+
+msgid "Output format"
+msgstr "Формат результата поиска"
+
+msgid "Total number of lines preceding and following the line that matches query"
+msgstr "Количество строк текста субтитров до и после строки, удовлетворяющей запросу"
+
+msgid "Path to output file. If not specified, standard output stream is used"
+msgstr "Путь для сохранения файла с результатом поиска. Если аргумент не указан, результат направляется в стандартный вывод"
+
+msgid "Path to yt-dlp tool that is used for subtitles downloading.\n"
+"Tool can be downloaded from https://github.com/yt-dlp/yt-dlp/releases page.\n"
+"If argument is not specified rely on PATH environment variable."
+msgstr "Путь к утилите yt-dlp, которая используется для скачивания субтитров.\n"
+"Скачать/обновить ее можно по адресу https://github.com/yt-dlp/yt-dlp/releases \n"
+"Если аргумент не указан, используется переменная среды PATH"
+
+msgid "Prevents network access to Youtube for specified number of hours "
+"after last successful downloading attempt when downloading is requested.\n"
+"Purpose is to allow non-experienced users to use unified program arguments "
+"and have both up to date subtitles and search attempt immediate responses"
+msgstr "Предотвращает обращение к youtube в течение указанного количества часов после последнего успешного скачивания субтитров.\n"
+"Позволяет неопытным пользователям пользоваться унифицированным набором аргументов, "
+"чтобы всегда искать по самым свежим субтитрам без задержек, связанных с сетевыми запросами"
+
+msgid "Whoosh search customization"
+msgstr "Настройка поиска с помощью Whoosh"
+
+msgid "Sorting method."
+msgstr "Метод сортировки."
+
+msgid "Limits number of search results in each video subtitles"
+msgstr "Ограничивает количество результатов в каждом файле субтитров"
+
+msgid "Regex search customization"
+msgstr "Настройка поиска с помощью регулярного выражения"
+
+msgid ""
+"Default search approach is to search line by line.\n"
+"This option allows to find text split between two adjacent lines"
+msgstr ""
+"По-умолчанию, поиск происходит в каждой строке.\n"
+"Данный аргумент позволяет искать на границе соседних строк"
+
+msgid "Option --youtube_channel_url should be specified when downloading is requested."
+msgstr "Аргумент --youtube_channel_url должен быть указан, так как запрошено скачивание субтитров."
+
+msgid "Option --searching_directory should not be specified when subtitles downloading is requested. Argument --subtitles_cache_directory allows to change location of downloaded subtitles"
+msgstr "Аргумент --searching_directory не должен быть указан, так как запрошено скачивание субтитров. Вместо этого можно изменить директорию для скачанных субтитров с помощью аргумента --subtitles_cache_directory"
+
+msgid "Option --searching_directory should not be specified when youtube channel is specified. Argument --subtitles_cache_directory allows to change location of downloaded subtitles"
+msgstr "Аргумент --searching_directory не должен быть указан, так как указана ссылка на youtube канал. Вместо этого можно изменить директорию для скачанных субтитров с помощью аргумента --subtitles_cache_directory"
+
+msgid "One of following options should be specified: --searching_directory, --download_subtitles, --youtube_channel_url"
+msgstr "Необходимо указать как минимум один из следующих аргументов: --searching_directory, --download_subtitles, --youtube_channel_url"
+
+msgid "Do not double-click the executable, instead call it from a command line."
+msgstr "Не запускайте программу двойным кликом мыши. Требуется запуск из командной строки."

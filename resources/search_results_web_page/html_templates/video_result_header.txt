@@ -1,0 +1,2 @@
+<p><b>%video_title%</b></p>
+<ul>

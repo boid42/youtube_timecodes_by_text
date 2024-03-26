@@ -1,0 +1,8 @@
+.idea/
+__pycache__/
+/venv
+/downloaded_subtitles/
+/downloaded_subtitles_min/
+/build/
+/dist/
+youtube_timecodes_by_text.spec

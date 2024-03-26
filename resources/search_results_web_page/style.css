@@ -1,0 +1,33 @@
+:root {
+  --text: #000;
+  --bg: #fff;
+  --color-link-hovered: #551a8b;
+  --color-link-visited: #551a8b;
+  --color-link: #0000ee;
+}
+
+body {
+  font-family: Roboto, Arial, sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+a:link {
+  color: var(--color-link);
+}
+a:visited {
+  color: var(--color-link-visited);
+}
+a:hover {
+  color: var(--color-link-hovered);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text: #ffffffbf;
+    --bg: #18181a;
+    --color-link-hovered: white;
+    --color-link-visited: #a58bdd;
+    --color-link: #8bb4dd;
+  }
+}

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Результат поиска по субтитрам</title>
+  %head_element_children%
+  
+  <style>
+    %style%
+  </style>
+</head>
+<body>
+<header>
+<h2>Результаты по запросу "%query_text%"</h2>
+</header>

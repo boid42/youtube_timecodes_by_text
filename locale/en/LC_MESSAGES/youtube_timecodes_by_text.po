@@ -1,0 +1,106 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR ORGANIZATION
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2024-02-25 07:53+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: pygettext.py 1.5\n"
+
+
+msgid "A query for search. See --search_engine parameter."
+msgstr ""
+
+msgid ""
+"default: simple case-insensitive string comparison\n"
+"regex: Python\'s standard regular expression. See https://docs.python.org/3/library/re.html#regular-expression-syntax\n"
+"whoosh: Whoosh search engine. See https://whoosh.readthedocs.io/en/latest/querylang.html"
+msgstr ""
+
+msgid ""
+"Path to directory where pre-downloaded youtube video subtitles are located.\n"
+"Used only --youtube_channel_url option is not specified.\n"
+"VTT subtitles format is supported only.\n"
+"Json file with video information should be located in the same folder."
+msgstr ""
+
+msgid "Download missing subtitles for channel before searching.\n"
+"Warning: Slows down execution especially if Youtube throttles on too often requests.\n"
+"Best practice is to download missing subtitles only when necessary.\n"
+"Searching can rely on caches subtitles. Just remove this option after downloading "
+"or use argument --subtitles_downloading_cooldown_hours."
+msgstr ""
+
+msgid "Delete downloaded video info files(subtitles and json) after conversion\n"
+"to text form to save file system space."
+msgstr ""
+
+msgid "URL of Youtube channel to download subtitles from. Ex: https://www.youtube.com/@galkovskyland"
+msgstr ""
+
+msgid "Path to root subtitles cache directory. All downloaded subtitles will be stored there."
+msgstr ""
+
+msgid "When downloading subtitles use video identifier instead of video title\n"
+"as part of names of created files and folders.\n"
+"Allows to avoid problem of max path length on Windows OS."
+msgstr ""
+
+msgid "Output format"
+msgstr ""
+
+msgid "Total number of lines preceding and following the line that matches query"
+msgstr ""
+
+msgid "Path to output file. If not specified, standard output stream is used"
+msgstr ""
+
+msgid "Path to yt-dlp tool that is used for subtitles downloading.\n"
+"Tool can be downloaded from https://github.com/yt-dlp/yt-dlp/releases page.\n"
+"If argument is not specified rely on PATH environment variable."
+msgstr ""
+
+msgid "Prevents network access to Youtube for specified number of hours "
+"after last successful downloading attempt when downloading is requested.\n"
+"Purpose is to allow non-experienced users to use unified program arguments "
+"and have both up to date subtitles and search attempt immediate responses"
+msgstr ""
+
+msgid "Whoosh search customization"
+msgstr ""
+
+msgid "Sorting method."
+msgstr ""
+
+msgid "Limits number of search results in each video subtitles"
+msgstr ""
+
+msgid "Regex search customization"
+msgstr ""
+
+msgid ""
+"Default search approach is to search line by line.\n"
+"This option allows to find text split between two adjacent lines"
+msgstr ""
+
+msgid "Option --youtube_channel_url should be specified when downloading is requested."
+msgstr ""
+
+msgid "Option --searching_directory should not be specified when subtitles downloading is requested. Argument --subtitles_cache_directory allows to change location of downloaded subtitles"
+msgstr ""
+
+msgid "Option --searching_directory should not be specified when youtube channel is specified. Argument --subtitles_cache_directory allows to change location of downloaded subtitles"
+msgstr ""
+
+msgid "One of following options should be specified: --searching_directory, --download_subtitles, --youtube_channel_url"
+msgstr ""
+
+msgid "Do not double-click the executable, instead call it from a command line."
+msgstr ""
