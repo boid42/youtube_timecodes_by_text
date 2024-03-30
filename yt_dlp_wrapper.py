@@ -16,15 +16,26 @@ def download_missing_video_subtitles(channel_id, channel_cache_dir_path, yt_dlp_
                                                           download_archive_path,
                                                           cookies_path,
                                                           yt_dlp_path)
+    debug_yt_dlp_results = False
 
     for video_info in videos_to_download:
-        download_video(video_info['id'],
-                       root_path,
-                       download_archive_path,
-                       cookies_path,
-                       yt_dlp_path,
-                       subtitles_only=True,
-                       minimize_file_system_path_length=minimize_file_system_path_length)
+        if debug_yt_dlp_results:
+            with open(f'{video_info['id']}.debug.info.json', 'w', encoding='utf-8') as output_file:
+                json.dump(video_info, output_file, indent='  ', ensure_ascii=False)
+
+        if 'live_status' not in video_info or video_info['live_status'] == 'not_live':
+            download_video(video_info['id'],
+                           root_path,
+                           download_archive_path,
+                           cookies_path,
+                           yt_dlp_path,
+                           subtitles_only=True,
+                           minimize_file_system_path_length=minimize_file_system_path_length)
+        else:
+            # yt-dlp returns fails on attempt to download subtitles for videos with live statuses:
+            #   "is_upcoming"
+            #   "is_live"
+            pass
 
 
 def download_video(video_id, root_path, download_archive_path, cookies_path, yt_dlp_path,
@@ -75,6 +86,8 @@ def get_unhandled_channel_video_list(channel_id, download_archive_path, cookies_
     args = [yt_dlp_path,
             '--newline',
             '--ignore-errors',
+            '--ignore-no-formats-error',  # to avoid a failure if YouTube channel
+                                          # has at least one scheduled live translation videos.
             '--dump-json',
             '--cookies', str(cookies_path),
             '--download-archive', str(download_archive_path),
