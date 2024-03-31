@@ -23,7 +23,8 @@ def download_missing_video_subtitles(channel_id, channel_cache_dir_path, yt_dlp_
             with open(f'{video_info['id']}.debug.info.json', 'w', encoding='utf-8') as output_file:
                 json.dump(video_info, output_file, indent='  ', ensure_ascii=False)
 
-        if 'live_status' not in video_info or video_info['live_status'] == 'not_live':
+        status = video_info['live_status'] if 'live_status' in video_info else None
+        if status is None or status == 'not_live' or status == 'was_live':
             download_video(video_info['id'],
                            root_path,
                            download_archive_path,
@@ -35,6 +36,7 @@ def download_missing_video_subtitles(channel_id, channel_cache_dir_path, yt_dlp_
             # yt-dlp returns fails on attempt to download subtitles for videos with live statuses:
             #   "is_upcoming"
             #   "is_live"
+            print(f'Skip live video {video_info['id']}. Status is {status}')
             pass
 
 
