@@ -1,7 +1,9 @@
 import json
+from io import TextIOWrapper
+import queue
 import sys
 import subprocess
-from io import TextIOWrapper
+from time import sleep
 
 
 def download_missing_video_subtitles(channel_id, channel_cache_dir_path, yt_dlp_path,
@@ -18,6 +20,33 @@ def download_missing_video_subtitles(channel_id, channel_cache_dir_path, yt_dlp_
                                                           yt_dlp_path)
     debug_yt_dlp_results = False
 
+    max_simultaneous_downloads = 2
+    download_queue = queue.Queue()
+    pending_downloads = []
+
+    def process_downloads():
+        for pd in list(pending_downloads):
+            video_id, proc = pd
+            if proc.poll() is None:
+                continue  # process is still running
+            if proc.returncode != 0:
+                raise Exception(f'Downloading of video {video_id} failed. Error code: {proc.returncode}')
+            print(f'video {video_id} downloading complete')
+            pending_downloads.remove(pd)
+
+        # start next download if free slot exists.
+        if not download_queue.empty() and len(pending_downloads) < max_simultaneous_downloads:
+            video_id = download_queue.get()
+            proc = start_video_download(video_id,
+                                        root_path,
+                                        download_archive_path,
+                                        cookies_path,
+                                        yt_dlp_path,
+                                        subtitles_only=True,
+                                        minimize_file_system_path_length=minimize_file_system_path_length
+                                        )
+            pending_downloads.append((video_id, proc))
+
     for video_info in videos_to_download:
         if debug_yt_dlp_results:
             with open(f'{video_info['id']}.debug.info.json', 'w', encoding='utf-8') as output_file:
@@ -25,26 +54,31 @@ def download_missing_video_subtitles(channel_id, channel_cache_dir_path, yt_dlp_
 
         status = video_info['live_status'] if 'live_status' in video_info else None
         if status is None or status == 'not_live' or status == 'was_live':
-            download_video(video_info['id'],
-                           root_path,
-                           download_archive_path,
-                           cookies_path,
-                           yt_dlp_path,
-                           subtitles_only=True,
-                           minimize_file_system_path_length=minimize_file_system_path_length)
+            download_queue.put(video_info['id'])
         else:
-            # yt-dlp returns fails on attempt to download subtitles for videos with live statuses:
+            # yt-dlp fails on attempt to download subtitles for videos with live statuses:
             #   "is_upcoming"
             #   "is_live"
             print(f'Skip live video {video_info['id']}. Status is {status}')
             pass
 
+        # attempt to download immediately
+        process_downloads()
 
-def download_video(video_id, root_path, download_archive_path, cookies_path, yt_dlp_path,
-                   subtitles_only,
-                   subtitles_langs=['ru'],  # TODO: support other languages
-                   minimize_file_system_path_length=False
-                   ):
+    # download the rest of videos
+    while not download_queue.empty():
+        process_downloads()
+        if len(pending_downloads) == max_simultaneous_downloads:
+            sleep(0.1)  # save cpu.
+
+    pass
+
+
+def start_video_download(video_id, root_path, download_archive_path, cookies_path, yt_dlp_path,
+                         subtitles_only,
+                         subtitles_langs=['ru'],  # TODO: support other languages
+                         minimize_file_system_path_length=False
+                         ):
     video_url = f'https://www.youtube.com/watch?v={video_id}'
 
     if minimize_file_system_path_length:
@@ -78,8 +112,15 @@ def download_video(video_id, root_path, download_archive_path, cookies_path, yt_
 
     # print(' '.join(args))
 
-    subprocess.run(args, shell=True, check=True)
-    pass
+    process = subprocess.Popen(args,
+                               shell=True,
+                               stdout=sys.stdout,
+                               stderr=subprocess.STDOUT
+                               )
+
+    if process.returncode is not None and process.returncode != 0:
+        raise Exception(f'Command {yt_dlp_path} failed. See error description above.')
+    return process
 
 
 def get_unhandled_channel_video_list(channel_id, download_archive_path, cookies_path, yt_dlp_path):
@@ -97,15 +138,12 @@ def get_unhandled_channel_video_list(channel_id, download_archive_path, cookies_
 
     # print(' '.join(args))
 
-    video_info_list = []
     with subprocess.Popen(args, stdout=subprocess.PIPE, shell=True) as process:
         for line in TextIOWrapper(process.stdout, encoding="utf-8"):
             video_info_json = json.loads(line)
             print(f'new video: {video_info_json['id']}, "{video_info_json['title']}"')
-            video_info_list.append(video_info_json)
+            yield video_info_json
 
     if process.returncode is not None and process.returncode != 0:
         raise Exception(f'Command {yt_dlp_path} failed. See error description above.')
 
-    return video_info_list  # TODO: better to allow handling of channel videos one by one
-                            # to allow incremental download in case of network errors
