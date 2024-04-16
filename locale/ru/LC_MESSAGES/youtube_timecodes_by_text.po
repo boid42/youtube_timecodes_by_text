@@ -49,6 +49,9 @@ msgstr "Скачать недостающие субтитры всех виде
 "Просто удалите этот аргумент после скачивания\n"
 "или воспользуйтесь аргументом --subtitles_downloading_cooldown_hours, чтобы выполнять обращение к youtube реже."
 
+msgid "Subtitles language code. Format: ISO 639. Examples: en, ru. Default is 'ru'."
+msgstr "Язык скачиваемых субтитров в формате ISO 639. Примеры: ru, en. По-умолчанию: ru."
+
 msgid "Delete downloaded video info files(subtitles and json) after conversion\n"
 "to text form to save file system space."
 msgstr "Удалить скачанные файлы, связанные с видео(субтитры и json файл информации о видео),\n"

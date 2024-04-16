@@ -15,6 +15,7 @@ from urllib.parse import urlparse
 # internal imports:
 from context_manager import ContextManager
 from utils import DownloadCooldownManager
+from utils import get_lang_code_iso639
 from utils import read_text_file_content
 from vtt_to_plain_text import convert_vtt_to_text_and_timecodes
 from whoosh_search import whoosh_update_index
@@ -82,6 +83,9 @@ def main():
                                'Searching can rely on caches subtitles. Just remove this option after downloading '
                                'or use argument --subtitles_downloading_cooldown_hours.'),
                         action='store_true')
+    parser.add_argument('--subtitles_language',
+                        help=_('Subtitles language code. Format: ISO 639. Examples: en, ru. Default is \'ru\'.'),
+                        default='ru')
     parser.add_argument('--delete_original_files_after_download',
                         help=_('Delete downloaded video info files(subtitles and json) after conversion\n'
                                'to text form to save file system space.'),
@@ -162,10 +166,12 @@ def main():
 
         download_manager = DownloadCooldownManager(root_subtitles_directory)
         if not download_manager.is_cooldown_active(timedelta(hours=args.subtitles_downloading_cooldown_hours)):
+            subtitles_lang = get_lang_code_iso639(args.subtitles_language)
             download_missing_video_subtitles(channel_id,
                                              root_subtitles_directory,
                                              args.yt_dlp_path,
-                                             args.minimize_file_system_path_length)
+                                             args.minimize_file_system_path_length,
+                                             subtitles_langs=[subtitles_lang] if subtitles_lang is not None else None)
             download_manager.save_last_successful_download_time()
     elif args.youtube_channel_url is not None:
         if args.searching_directory is not None:

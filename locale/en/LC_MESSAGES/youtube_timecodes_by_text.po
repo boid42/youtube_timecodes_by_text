@@ -38,6 +38,9 @@ msgid "Download missing subtitles for channel before searching.\n"
 "or use argument --subtitles_downloading_cooldown_hours."
 msgstr ""
 
+msgid "Subtitles language code. Format: ISO 639. Examples: en, ru. Default is 'ru'."
+msgstr ""
+
 msgid "Delete downloaded video info files(subtitles and json) after conversion\n"
 "to text form to save file system space."
 msgstr ""

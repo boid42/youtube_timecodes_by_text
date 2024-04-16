@@ -1,5 +1,5 @@
 import datetime
-from pathlib import Path
+import re
 
 
 class DownloadCooldownManager:
@@ -42,3 +42,10 @@ def save_text_file_content(path, content):
     path.parent.mkdir(parents=True, exist_ok=True)
     with open(path, 'w', encoding='utf-8') as f:
         f.write(content)
+
+
+def get_lang_code_iso639(lang_string_unsafe):
+    if re.match(r'[a-z]{2,3}', lang_string_unsafe):
+        lang_string_safe = lang_string_unsafe
+        return lang_string_safe
+    return None

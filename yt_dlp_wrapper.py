@@ -6,8 +6,11 @@ import subprocess
 from time import sleep
 
 
-def download_missing_video_subtitles(channel_id, channel_cache_dir_path, yt_dlp_path,
-                                     minimize_file_system_path_length=False):
+def download_missing_video_subtitles(channel_id,
+                                     channel_cache_dir_path,
+                                     yt_dlp_path,
+                                     minimize_file_system_path_length=False,
+                                     subtitles_langs=None):
     root_path = channel_cache_dir_path.parent
     channel_cache_dir_path.mkdir(parents=True, exist_ok=True)
 
@@ -43,7 +46,8 @@ def download_missing_video_subtitles(channel_id, channel_cache_dir_path, yt_dlp_
                                         cookies_path,
                                         yt_dlp_path,
                                         subtitles_only=True,
-                                        minimize_file_system_path_length=minimize_file_system_path_length
+                                        minimize_file_system_path_length=minimize_file_system_path_length,
+                                        subtitles_langs=subtitles_langs
                                         )
             pending_downloads.append((video_id, proc))
 
@@ -74,10 +78,14 @@ def download_missing_video_subtitles(channel_id, channel_cache_dir_path, yt_dlp_
     pass
 
 
-def start_video_download(video_id, root_path, download_archive_path, cookies_path, yt_dlp_path,
+def start_video_download(video_id,
+                         root_path,
+                         download_archive_path,
+                         cookies_path,
+                         yt_dlp_path,
                          subtitles_only,
-                         subtitles_langs=['ru'],  # TODO: support other languages
-                         minimize_file_system_path_length=False
+                         minimize_file_system_path_length=False,
+                         subtitles_langs=None
                          ):
     video_url = f'https://www.youtube.com/watch?v={video_id}'
 
@@ -93,15 +101,15 @@ def start_video_download(video_id, root_path, download_archive_path, cookies_pat
     args = [yt_dlp_path,
             '--no-mtime',
             '--write-sub',
-            '--write-auto-sub',
-            '--sub-lang', ','.join(subtitles_langs),
-            '--write-info-json',
-            '--no-clean-infojson',
-            '--output', output_path_template,
-            '--paths', f'home:{root_path}',
-            '--cookies', str(cookies_path),
-            '--download-archive', str(download_archive_path)]
-
+            '--write-auto-sub']
+    if subtitles_langs is not None:
+        args.extend(['--sub-lang', ','.join(subtitles_langs)])
+    args.extend(['--write-info-json',
+                 '--no-clean-infojson',
+                 '--output', output_path_template,
+                 '--paths', f'home:{root_path}',
+                 '--cookies', str(cookies_path),
+                 '--download-archive', str(download_archive_path)])
     if subtitles_only:
         args.extend([
             '--skip-download',
